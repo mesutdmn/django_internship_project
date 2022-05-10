@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block body %}
+{% load crispy_forms_tags %}
+{% include "includes/dashboard_buttons.html" %}
+
+<div class="row">
+	<div class="col-md-6 offset-md-3">
+		<h3>Etkinlik Oluştur</h3>
+
+			<form method = "post" enctype="multipart/form-data">
+			{% csrf_token %}
+			{{form.media}}
+			{{form|crispy}}
+			<br>
+			<button type="submit" class="btn btn-danger">Oluştur</button>
+	</div>
+</div>
+</form>
+{% endblock body %}

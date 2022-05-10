@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+
+
+{% block body %}
+<div class="row g-5">
+    <div class="col-md-8">
+      <h3 class="pb-4 mb-4 fst-italic border-bottom" style="text-transform: uppercase;" >{{etkinlik.title}}</h3>
+      <p>Yayınlanma Tarihi : {{etkinlik.created_date}}</p>
+      <hr>
+      <p class="lead">
+          {{etkinlik.content|safe}}
+      </p>
+
+      <hr>
+      {% if request.user.is_authenticated %} 
+        <button class="btn btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#katilimcilar" aria-expanded="false" aria-controls="collapseExample">
+           Katılımcılar Tablosu
+         </button>
+         <button class="btn btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#csv-yukle" aria-expanded="false" aria-controls="collapseExample">
+           Tablo Yüklemek İçin Tıklayınız
+         </button>
+          <button class="btn btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#csv-indir" aria-expanded="false" aria-controls="collapseExample">
+           Tablo İndirmek İçin Tıklayınız
+         </button>
+         <div class="collapse" id="katilimcilar">
+            <div class="card card-body">
+              {% include "includes/katilimcilar.html" %}
+            </div>
+          </div>
+        
+         <div class="collapse" id="csv-yukle">
+            <div class="card card-body">
+               {% include "includes/Importexcel.html" %}
+            </div>
+          </div>
+            <div class="collapse" id="csv-indir">
+            <div class="card card-body">
+               {% include "includes/tablo_indir.html" %}
+            </div>
+          </div>
+      {% endif %}
+          <button class="btn btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#katilim-formu" aria-expanded="false" aria-controls="collapseExample">
+            Katılım Formu
+          </button>
+         <div class="collapse" id="katilim-formu">
+            <div class="card card-body">
+              {% include "includes/katilimciformu.html" %} 
+            </div>
+          </div>
+      <hr> 
+    </div>
+    <div class="col-md-4 ">
+     {% if etkinlik.etkinlik_poster %}
+      <img class="imgposter" src="{{etkinlik.etkinlik_poster.url}}" alt="">
+      {% endif %}
+      {% if etkinlik.etkinlik_tarihi %}
+        {% include "includes/takvim.html" %} 
+      {% endif %}
+    </div>
+</div>
+ 
+{% endblock body %}

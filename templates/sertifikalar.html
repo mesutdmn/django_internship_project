@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+
+{% block body %}
+{% include "includes/dashboard_buttons.html" %}
+
+<form method="POST">
+    {% csrf_token %}
+    <table class="table" style="width:100%">
+    <thead>
+        <tr>
+            <th scope='col'><input type="checkbox" name="select-all" id="select-all" class="checkAll"> SEÇ</th>
+            <th scope="col">Etkinlik ID</th>
+            <th scope="col">ÖRNEK</th>
+            <th scope="col">İsim Kordinatları</th>
+            <th scope="col">Tarih Kordinatları</th>
+            <th scope="col">QR Kordinatları</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for i in tablo %}
+    <tr>
+            <td><input type="checkbox" name="selected_options"  class="checkbox" value="{{i.etkinlik_id}}"></td>
+            <td>{{i.etkinlik_id}}</td>
+            {% if i.ornek_sertifika %}
+            <td><a href="{{i.ornek_sertifika.url}}" target="_blank">ÖRNEK</a></td>
+            {% else %}
+            <td>ÖRNEK YOK</td>
+            {% endif %}
+            <td>{{i.kordinat_isim}}</td>
+            <td>{{i.kordinat_tarih}}</td>
+            <td>{{i.kordinat_qr}}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+    <button type="submit" class="btn btn-danger">Sil</button>
+</form>
+<hr>
+{% if tablo.has_other_pages %}
+  <ul class="pagination justify-content-center">
+    {% if tablo.has_previous %}
+      <li class="page-item" ><a class="page-link" href="?page={{ tablo.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="page-item disabled"><span><a class="page-link">&laquo;</a></span></li>
+    {% endif %}
+    {% for i in tablo.paginator.page_range %}
+      {% if tablo.number == i %}
+        <li class="page-item active"><span class="page-link">{{ i }}</span></li>
+      {% else %}
+        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if tablo.has_next %}
+      <li class="page-item"><a class="page-link" href="?page={{ tablo.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="page-item disabled"><span><a class="page-link">&laquo;</a></span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+{% endblock body %}

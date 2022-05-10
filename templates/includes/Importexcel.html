@@ -1,0 +1,13 @@
+{% block content %}
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-sm-4">
+          <input type="file" name="myfile" class="form-control">
+        </div>
+        <div class="col-sm-4">
+          <button type="submit" class="btn btn-success" >Yükle</button>                                  
+        </div>
+    </div>
+  </form>  
+{% endblock %}

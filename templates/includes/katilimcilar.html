@@ -1,0 +1,22 @@
+<table class="table" style="width:100%">
+  <thead>
+    <tr>
+      <th scope="col">Etkinlik ID</th>
+      <th scope="col">TC NO</th>
+      <th scope="col">İsim</th>
+      <th scope="col">Soy İsim</th>
+      <th scope="col">Mail</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for i in tablo %}
+  <tr>
+      <td>{{etkinlik.id}}</td>
+      <td>{{i.tc_no}}</td>
+      <td>{{i.isim}}</td>
+      <td>{{i.soy_isim}}</td>
+      <td>{{i.email}}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>

@@ -1,0 +1,75 @@
+
+{% extends "layout.html" %}
+
+{% block body %}
+{% include "includes/dashboard_buttons.html" %}
+
+{% load crispy_forms_tags %}
+  <form name="pointform" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-sm-4">
+            {% csrf_token %}
+            {{form|crispy}}
+            <input type='file' name="resim" class="form-control"/>
+              <br>
+              <div id="pointer_div" onclick="point_it(event)" >
+              <img id="myImg" src="#" style="display: none;"></div>
+              <hr>
+              İsim ve Soy İsim Alanı x = <input type="text" name="form_x1" size="4" /> - y = <input type="text" name="form_y1" size="4" />
+              <hr>
+              Etkinlik Tarihi Alanı x = <input type="text" name="form_x2" size="4" /> - y = <input type="text" name="form_y2" size="4" />
+              <hr>
+              QR Code Alanı x = <input type="text" name="form_x3" size="4" /> - y = <input type="text" name="form_y3" size="4" />
+        <hr>
+        <button type="submit" class="btn btn-success" >Yükle</button> 
+        </div>
+                                       
+        
+    </div>
+  </form>
+
+<hr>
+<script language="JavaScript">
+
+
+window.addEventListener('load', function() {
+  document.querySelector('input[type="file"]').addEventListener('change', function() {
+      if (this.files && this.files[0]) {
+          var img = document.querySelector('img');
+          img.onload = () => {
+              URL.revokeObjectURL(img.src);  // no longer needed, free memory
+          }
+          document.getElementById("pointer_div").style.witdh = img.witdh;
+          document.getElementById("myImg").style.display = 'block';
+          img.src = URL.createObjectURL(this.files[0]); // set src to blob url
+      }
+  });
+});
+
+let counter=0
+function point_it(event){
+    counter+=1
+    pos_x = event.offsetX?(event.offsetX):event.pageX-document.getElementById("pointer_div").offsetLeft;
+    pos_y = event.offsetY?(event.offsetY):event.pageY-document.getElementById("pointer_div").offsetTop;
+    if (counter==1){
+    document.pointform.form_x1.value = pos_x;
+    document.pointform.form_y1.value = pos_y;
+
+    }
+    if (counter==2){
+    document.pointform.form_x2.value = pos_x;
+    document.pointform.form_y2.value = pos_y;
+
+    }
+    if (counter==3){
+    document.pointform.form_x3.value = pos_x;
+    document.pointform.form_y3.value = pos_y;
+    counter=0
+    }
+    
+}
+</script>
+
+
+{% endblock body %}

@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<div class="h-5 p-5 bg-light border rounded-3 text-center">
+    <h3>Etkinlikler</h3>
+    <hr>
+</div>
+<div class="row" style="text-align: center;">
+  
+
+    {% if etkinlikler %}
+        {% for etkinlik in etkinlikler %}
+        
+            {% if etkinlik.etkinlik_poster %}
+            <div class="col-md-6 mt-1 col-lg-3" >
+                 <a href="{% url 'article:detay' etkinlik.id %}"> <img class="img-fluids" src="{{etkinlik.etkinlik_poster.url}}" alt=""/></a>
+            </div>
+            {% endif %}
+
+        {% endfor %}
+
+    {% else %}
+    <div class ="alert alert-danger">
+       Etkinlik Bulunamadı
+    </div>
+    {% endif %}
+    
+</div>
+
+<hr>
+{% if etkinlikler.has_other_pages %}
+  <ul class="pagination justify-content-center">
+    {% if etkinlikler.has_previous %}
+      <li class="page-item" ><a class="page-link" href="?page={{ etkinlikler.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="page-item disabled"><span><a class="page-link">&laquo;</a></span></li>
+    {% endif %}
+    {% for i in etkinlikler.paginator.page_range %}
+      {% if etkinlikler.number == i %}
+        <li class="page-item active"><span class="page-link">{{ i }}</span></li>
+      {% else %}
+        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if etkinlikler.has_next %}
+      <li class="page-item"><a class="page-link" href="?page={{ etkinlikler.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="page-item disabled"><span><a class="page-link">&laquo;</a></span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+
+{% endblock body %}

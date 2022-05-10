@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block body %}
+{% load crispy_forms_tags %}
+
+<div class="row">
+	<div class="col-md-6 offset-md-3">
+		<h3>Giris Yap</h3>
+
+			<form method="post">
+			{% csrf_token %}
+			{{form|crispy}}
+			<br>
+			<button type="submit" class="btn btn-danger">Giris Yap</button>
+	</div>
+</div>
+</form>
+{% endblock body %}

@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="fa fa-home w3-xxlarge btn btn-light" style="margin-left : 5px" href="{% url 'index'  %}"></a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-top: 10px;">
+         
+          <ul class="navbar-nav ms-auto">
+          {% if request.user.is_authenticated %}  
+          <li class="nav-item active">
+            <a class="btn btn-primary " style="margin-right: 5px; margin-bottom : 13px;" href="{% url 'article:dashboard'  %}">Kontrol Paneli</a>
+          </li>
+          <li class="nav-item active">
+            <a class="btn btn-outline-danger" style="margin-right: 5px; margin-bottom : 13px;" href="{% url 'user:logout'  %}">Çıkış Yap</a>
+          </li>
+          {% else %}
+
+          <li class="nav-item active">
+            <a class="btn btn-outline-success" style="margin-right: 5px; margin-bottom : 13px;" href="{% url 'user:login'  %}">Giriş Yap</a>
+          </li>
+          {% endif %}
+          
+          </ul>
+            <form class="d-flex">
+            {% csrf_token %}
+                <input class="form-control me-2"  type="search" name= "keyword" placeholder="Etkinlik Ara.." aria-label="Search">
+                <button class="fa fa-search btn btn-outline-info" type="submit"></button>
+            </form>
+        </div>
+    </div>
+    
+</nav>

@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+
+{% block body %}
+{% include "includes/dashboard_buttons.html" %}
+
+<form method="POST">
+    {% csrf_token %}
+    <table class="table" style="width:100%">
+    <thead>
+        <tr>
+            <th scope='col'><input type="checkbox" name="select-all" id="select-all" class="checkAll"> SEÇ</th>
+            <th scope="col">SERTİFİKA ID</th>
+            <th scope="col">ETKİNLİK ID</th>
+            <th scope="col">Katılımcı Email</th>
+            <th scope="col">Ad Soyad</th>
+            <th scope="col">Sertifika Resmi</th>
+
+        </tr>
+    </thead>
+    <tbody>
+    {% for i in mevcut_sertifikalar %}
+    <tr>
+            <td><input type="checkbox" name="selected_options"  class="checkbox" value="{{i.sertifika_id}}"></td>
+            <td>{{i.sertifika_id}}</td>
+            <td>{{i.sertifika_etkinlik_id}}</td>
+            <td>{{i.katilimci_email}}</td>
+            <td>{{i.ad_soyad}}</td>
+        {% if i.sertifika_mevcut %}
+            <td>Mevcut</td>
+        {% else %}
+            <td>Silinmiş</td>
+        {% endif %}
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+    <button type="submit" name="mail_gonder" class="btn btn-success" value="1">Mail Gönder</button>
+    <button type="submit" name="google_yukle" class="btn btn-dark" value="1">Google Yükle</button>
+    
+    <div style="text-align: right;" >
+    <button type="submit" name="sil" class="btn btn-danger" value="1">Sertifikayi Veritabanından Sil</button>
+    <button type="submit" name="sil_resim" class="btn btn-info" value="1">Sertifika Resmini Sil</button>
+    <div>
+
+</form>
+<hr>
+{% if mevcut_sertifikalar.has_other_pages %}
+  <ul class="pagination justify-content-center">
+    {% if mevcut_sertifikalar.has_previous %}
+      <li class="page-item" ><a class="page-link" href="?page={{ mevcut_sertifikalar.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="page-item disabled"><span><a class="page-link">&laquo;</a></span></li>
+    {% endif %}
+    {% for i in mevcut_sertifikalar.paginator.page_range %}
+      {% if mevcut_sertifikalar.number == i %}
+        <li class="page-item active"><span class="page-link">{{ i }}</span></li>
+      {% else %}
+        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if mevcut_sertifikalar.has_next %}
+      <li class="page-item"><a class="page-link" href="?page={{ mevcut_sertifikalar.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="page-item disabled"><span><a class="page-link">&laquo;</a></span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+{% endblock body %}

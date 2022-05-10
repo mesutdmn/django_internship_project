@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+
+
+{% block body %}
+
+<h3>Kontrol Paneli</h3>
+<hr>
+<p>
+Mevut Kullanıcı : <small>{{request.user.username}}</small>
+</p>
+{% include "includes/dashboard_buttons.html" %}
+{% if etkinlikler %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Anasayfa</th>
+      <th scope="col">Etkinlik</th>
+      <th scope="col">Etkinlik Tarihi</th>
+      <th scope="col">Güncelle</th>
+      <th scope="col">Sil</th>
+      <th scope="col">İncele</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    {% for etkinlik in etkinlikler %}
+       <tr>
+      <th scope="row">{{etkinlik.id}}</th>
+      {% if etkinlik.goster %}
+      <td><i class="fa fa-check" style="font-size:28px;color:green"></i></td>
+      {% else %}
+      <td><i class="fa fa-close" style="font-size:28px;color:red"></i></td>
+      {% endif %}
+
+      <td>{{etkinlik.title}}</td>
+      <td>{{etkinlik.etkinlik_tarihi}}</td>
+      <td><a href="{% url 'article:update' etkinlik.id %}" class="btn btn-success">Güncelle</a> </td>
+      <td><a href="{% url 'article:delete' etkinlik.id %}" class="btn btn-danger">Sil</a> </td>
+      <td><a href="{% url 'article:detay' etkinlik.id %}" class="btn btn-info">İncele</a> </td>
+
+    </tr>
+    
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+    <div class="alert alert-danger">
+        Makaleniz Bulunmuyor
+    </div>
+{% endif %}
+<hr>
+{% if etkinlikler.has_other_pages %}
+  <ul class="pagination justify-content-center">
+    {% if etkinlikler.has_previous %}
+      <li class="page-item" ><a class="page-link" href="?page={{ etkinlikler.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="page-item disabled"><span><a class="page-link">&laquo;</a></span></li>
+    {% endif %}
+    {% for i in etkinlikler.paginator.page_range %}
+      {% if etkinlikler.number == i %}
+        <li class="page-item active"><span class="page-link">{{ i }}</span></li>
+      {% else %}
+        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if etkinlikler.has_next %}
+      <li class="page-item"><a class="page-link" href="?page={{ etkinlikler.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="page-item disabled"><span><a class="page-link">&laquo;</a></span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+{% endblock body %}
