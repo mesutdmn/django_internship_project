@@ -14,9 +14,6 @@ python manage.py migrate
 
 Sisteme admin girişi yapabilmek için bir yönetici oluşturun;
 ```
-Create SuperUser 
-
 python manage.py createsuperuser
 ```
-
 Sisteminiz bu işlemlerden sonra tamamlanmış olacaktır. 
