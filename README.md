@@ -1,19 +1,19 @@
 
-Projeyi yerel ağınızda çalıştırmak için ;
+To run the project on your local network ;
 
-Gereki kütüphaneleri requirements.txt içerisinden otomatik olarak pip yardımıyla kurabilirsiniz.
+You can automatically install the necessary libraries from the requirements.txt with the help of pip.
 ```
 pip install -r requirements.txt
 ```
 
-Veri tabanını pythonu proje klasöründe çağırarak migrate ediniz;
+Migrate the database by calling python in the project folder;
 ```
 python manage.py makemigrations
 python manage.py migrate
 ```
 
-Sisteme admin girişi yapabilmek için bir yönetici oluşturun;
+Create an administrator to be able to login to the system as admin;
 ```
 python manage.py createsuperuser
 ```
-Sisteminiz bu işlemlerden sonra tamamlanmış olacaktır. 
+Your system will be complete after these processes.
